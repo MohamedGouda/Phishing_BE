@@ -5,7 +5,8 @@ const Target = require("../Models/target");
 
 exports.getTargetsList = (req, res) => {
     try {
-        targetService.getAllTargets()
+        const result = targetService.getAllTargets()
+        return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });
     }
@@ -13,7 +14,8 @@ exports.getTargetsList = (req, res) => {
 
 exports.getTargetById = (req, res) => {
     try {
-        targetService.getTargetById(req.params.target_id, res)
+        const result = targetService.getTargetById(req.params.target_id, res)
+        return res.status(result.status).send(JSON.stringify(result.data)); 
     } catch (error) {
         return res.status(500).send({ error });
     }
@@ -21,7 +23,8 @@ exports.getTargetById = (req, res) => {
 
 exports.addTarget = (req, res) => {
     try {
-        targetService.addNewTarget(req.body)
+        const result = targetService.addNewTarget(req.body)
+        return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });
     }
@@ -29,7 +32,8 @@ exports.addTarget = (req, res) => {
 
 exports.addBulkData = (req, res) => {
     try {
-        targetService.addNewTarget(req.body)
+        const result = targetService.addNewTarget(req.body)
+        return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });
     }

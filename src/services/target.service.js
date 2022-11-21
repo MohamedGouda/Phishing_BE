@@ -22,18 +22,18 @@ const validateName = (name) => {
 exports.getTargetById = async (id, res) => {
     try {
         const data = await Target.findOne(({ where: { target_id: id } }))
-        return res.status(200).send(JSON.stringify(data.rows));
+        return { status: 200, data };
     } catch (error) {
-        return res.status(500).send({ error });
+        return { status: 404, data: error };
     }
 }
 
 exports.getAllTargets = async () => {
     try {
         const data = await Target.findAll();
-        return res.status(200).send(JSON.stringify(data));
+        return { status: 200, data };
     } catch (error) {
-        return res.status(500).send({ error });
+        return { status: 404, data: error };
     }
 }
 
@@ -42,21 +42,21 @@ exports.addNewTarget = async (data) => {
     try {
         if (validateTargetData(data)) {
             const addedTarget = await Target.create({ ...data });
-            return res.status(200).send(JSON.stringify(addedTarget.rows));
+            return { status: 200, data: addedTarget };
         } else {
-            return res.status(402).send({ error: 'Please enter valid data' });
+            return { status: 401, data: "adding failed..." };
         }
     } catch (error) {
-        return res.status(500).send({ error });
+        return { status: 500, data: error };
     }
 }
 
 exports.addBulkData = async (data) => {
     try {
         const addedTarget = await Target.bulkCreate(data);
-        return res.status(200).send(JSON.stringify(addedTarget.rows));
+        return { status: 200, data: addedTarget };
     } catch (error) {
-        return res.status(500).send({ error });
+        return { status: 500, data: error };
 
     }
 }
