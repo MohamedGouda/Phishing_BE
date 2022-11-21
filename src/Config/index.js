@@ -21,7 +21,7 @@ module.exports = {
         database: 'phishing',
         dialect: 'postgres',
         username: 'postgres',
-        password: '', // Add your password here
+        password: 'postgres', // Add your password here
         pool: {
             max: 5,
             min: 0,

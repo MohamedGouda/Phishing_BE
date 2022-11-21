@@ -4,8 +4,10 @@ const targetController = require("../Controllers/target.controller");
 
 router.get("/target", targetController.getTargetsList);
 
-router.get("/target/:targetId", targetController.getTargetById);
+router.get("/target/:target_id", targetController.getTargetById);
 
 router.post("/target", targetController.addTarget);
+
+router.post("/target/bulk" , targetController.addBulkData)
 
 module.exports = router;

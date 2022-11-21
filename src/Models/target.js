@@ -7,6 +7,9 @@ const Target = db.define(
     target_id: {
       type: DataTypes.UUID,
       primaryKey: true,
+      allowNull: false,
+      autoIncrement: true
+
     },
     email: DataTypes.TEXT,
     rate: DataTypes.INTEGER,

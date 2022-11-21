@@ -3,45 +3,34 @@
 var targetService = require('../Services/target.service')
 const Target = require("../Models/target");
 
-exports.getTargetsList = async (req, res) => {
+exports.getTargetsList = (req, res) => {
     try {
-        // var listQuery = queries.targetQueryList.getTargetsList_Query;
-        const data = await Target.findAll();
-        // var data = await db_connection.dbQuery(listQuery);
-        return res.status(200).send(JSON.stringify(data));
-
+        targetService.getAllTargets()
     } catch (error) {
-        console.log(error);
         return res.status(500).send({ error });
     }
 }
 
-exports.getTargetById = async (req, res) => {
+exports.getTargetById = (req, res) => {
     try {
-        var id = req.query.targetId;
-        var listQuery = queries.targetQueryList.getTargetById_Query;
-        var data = await db_connection.dbQuery(listQuery, id);
-        return res.status(200).send(JSON.stringify(data.rows));
-
+        targetService.getTargetById(req.params.target_id, res)
     } catch (error) {
-        console.log(error);
         return res.status(500).send({ error });
     }
 }
 
-exports.addTarget = async (req, res) => {
+exports.addTarget = (req, res) => {
     try {
-
-        if (targetService.validateTargetData(req.body)) {
-            var listQuery = queries.targetQueryList.saveTarget_Query;
-            var data = await db_connection.dbQuery(listQuery, targetData);
-            return res.status(200).send(JSON.stringify(data.rows));
-        }else{
-            return res.status(402).send({error: 'Please enter valid data'});
-        }
-
+        targetService.addNewTarget(req.body)
     } catch (error) {
-        console.log(error);
+        return res.status(500).send({ error });
+    }
+}
+
+exports.addBulkData = (req, res) => {
+    try {
+        targetService.addNewTarget(req.body)
+    } catch (error) {
         return res.status(500).send({ error });
     }
 }
