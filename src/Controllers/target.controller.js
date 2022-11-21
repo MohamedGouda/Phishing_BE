@@ -3,9 +3,9 @@
 var targetService = require('../Services/target.service')
 const Target = require("../Models/target");
 
-exports.getTargetsList = (req, res) => {
+exports.getTargetsList = async (req, res) => {
     try {
-        const result = targetService.getAllTargets()
+        const result = await targetService.getAllTargets();
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });

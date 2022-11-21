@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const Target = require("../Models/target");
 
 validateTargetData = (targetDate) => {
@@ -41,6 +42,7 @@ exports.addNewTarget = async (data) => {
 
     try {
         if (validateTargetData(data)) {
+            data.target_id = uuidv4();
             const addedTarget = await Target.create({ ...data });
             return { status: 200, data: addedTarget };
         } else {

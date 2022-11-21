@@ -8,9 +8,8 @@ const Target = db.define(
       type: DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
-      autoIncrement: true
-
     },
+    name: DataTypes.TEXT,
     email: DataTypes.TEXT,
     rate: DataTypes.INTEGER,
     user_id: DataTypes.TEXT,
