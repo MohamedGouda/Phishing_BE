@@ -1,13 +1,4 @@
-var pool = require('./pool')
+const { Sequelize } = require("sequelize");
+const config = require("../Config")[process.env.NODE_ENV || "development"];
 
-
-exports.dbQuery = (queryText , queryParams) =>{
-    return new Promise((resolve , reject) => {
-        pool.query(queryText , queryParams)
-        .then(res => {
-            resolve(res);
-        }).catch(err =>{
-            reject(err);
-        })
-    });
-}
+module.exports =  new Sequelize(config.postgres.options);

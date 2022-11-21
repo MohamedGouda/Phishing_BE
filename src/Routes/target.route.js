@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const targetController = require('../Controllers/target.controller')
+const targetController = require("../Controllers/target.controller");
 
-router.get('/target', targetController.getTargetsList)
+router.get("/target", targetController.getTargetsList);
 
-router.get('/target/:targetId', targetController.getTargetById)
+router.get("/target/:targetId", targetController.getTargetById);
 
-router.post('/target' , targetController.addTarget)
+router.post("/target", targetController.addTarget);
 
-module.exports = router ;
+module.exports = router;

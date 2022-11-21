@@ -1,12 +1,14 @@
-var queries = require('../Database/queries')
-var db_connection = require('../Database/connection')
+// var queries = require('../Database/queries')
+// var db_connection = require('../Database/connection')
 var targetService = require('../Services/target.service')
+const Target = require("../Models/target");
 
 exports.getTargetsList = async (req, res) => {
     try {
-        var listQuery = queries.targetQueryList.getTargetsList_Query;
-        var data = await db_connection.dbQuery(listQuery);
-        return res.status(200).send(JSON.stringify(data.rows));
+        // var listQuery = queries.targetQueryList.getTargetsList_Query;
+        const data = await Target.findAll();
+        // var data = await db_connection.dbQuery(listQuery);
+        return res.status(200).send(JSON.stringify(data));
 
     } catch (error) {
         console.log(error);
