@@ -1,14 +1,19 @@
 const { v4: uuidv4 } = require('uuid');
 const Target = require("../Models/target");
 
+
+setReturnedObjectFromVerification = (target, msg) => {
+    return obj = {
+        target,
+        msg
+    }
+}
+
 validateTargetData = (targetDate) => {
     return (validateEmail(targetDate.email) && validateName(targetDate.name)) ? true : false
 }
 
-validateTargetDataList = (targetList) => {
-}
-
-const validateEmail = (email) => {
+validateEmail = (email) => {
     return (String(email)
         .toLowerCase()
         .match(
@@ -16,8 +21,13 @@ const validateEmail = (email) => {
         ) && String(email).length <= 254);
 };
 
-const validateName = (name) => {
+validateName = (name) => {
     return name.length <= 50
+}
+
+checkEmailDuplication = async (email) => {
+    const data = await Target.findOne(({ where: { email: email } }))
+    return data ? true : false
 }
 
 exports.getTargetById = async (id, res) => {
@@ -65,27 +75,27 @@ exports.addBulkData = async (data) => {
     }
 }
 
+
 exports.verifyBulkData = async (data) => {
     try {
         validList = []
         notValidList = []
+        obj = {}
 
         data.forEach(target => {
-            if (validateTargetData(target)) {
-                validList.push(target)
+            if (checkEmailDuplication(target.email)) {
+                notValidList.push(setReturnedObjectFromVerification(target, 'email duplicated'))
+            }
+            else if (validateTargetData(target)) {
+                validList.push(setReturnedObjectFromVerification(target, ''))
             } else {
                 if (target.name == '') {
-                    obj = {
-                        target,
-                        msg: 'name is required'
-                    }
+                    notValidList.push(setReturnedObjectFromVerification(target, 'name is required'))
                 } else if (target.email == '') {
-                    obj = {
-                        target,
-                        msg: 'email is required'
-                    }
+                    notValidList.push(setReturnedObjectFromVerification(target, 'email is required'))
+                } else {
+                    notValidList.push(setReturnedObjectFromVerification(target, ''))
                 }
-                notValidList.push(obj)
             }
         })
         return {
