@@ -21,9 +21,10 @@ exports.getTargetById = (req, res) => {
     }
 }
 
-exports.addTarget = (req, res) => {
+exports.addTarget = async (req, res) => {
     try {
-        const result = targetService.addNewTarget(req.body)
+        const result = await targetService.addNewTarget(req.body)
+        console.log(result)
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });
