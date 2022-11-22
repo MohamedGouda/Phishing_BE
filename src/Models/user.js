@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../Database/connection");
 
-const Users = db.define(
+const User = db.define(
   "user",
   {
     user_id: {
@@ -19,4 +19,4 @@ const Users = db.define(
   { timestamps: false }
 );
 
-module.exports = Users;
+module.exports = User;
