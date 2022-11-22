@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const Target = require("../Models/target");
 
 validateTargetData = (targetDate) => {
-    return (validateEmail(targetDate.email)/* && validateName(targetDate.name)*/) ? true : false
+    return (validateEmail(targetDate.email) && validateName(targetDate.name)) ? true : false
 }
 
 validateTargetDataList = (targetList) => {
@@ -55,13 +55,36 @@ exports.addNewTarget = async (data) => {
 
 exports.addBulkData = async (data) => {
     try {
-        data = data.map((t)=>{return {...t , target_id: uuidv4()}})
+        data = data.map((t) => { return { ...t, target_id: uuidv4() } })
 
         console.log(data)
         const addedTarget = await Target.bulkCreate(data);
         return { status: 200, data: addedTarget };
     } catch (error) {
         return { status: 500, data: error };
+    }
+}
 
+exports.verifyBulkData = async (data) => {
+    try {
+        validList = []
+        notValidList = []
+
+        data.forEach(target => {
+            if (validateTargetData(target)) {
+                validList.push(target)
+            } else {
+                notValidList.push(target)
+            }
+        })
+        return {
+            status: 200,
+            data: {
+                valid: validList,
+                notValid: notValidList
+            }
+        }
+    } catch (error) {
+        return { status: 500, data: error };
     }
 }

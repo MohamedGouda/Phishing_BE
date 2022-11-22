@@ -10,4 +10,6 @@ router.post("/target", targetController.addTarget);
 
 router.post("/target/bulk" , targetController.addBulkData)
 
+router.post("/target/bulk/verify" , targetController.verifyBulkData)
+
 module.exports = router;
