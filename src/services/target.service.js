@@ -74,7 +74,18 @@ exports.verifyBulkData = async (data) => {
             if (validateTargetData(target)) {
                 validList.push(target)
             } else {
-                notValidList.push(target)
+                if (target.name == '') {
+                    obj = {
+                        target,
+                        msg: 'name is required'
+                    }
+                } else if (target.email == '') {
+                    obj = {
+                        target,
+                        msg: 'email is required'
+                    }
+                }
+                notValidList.push(obj)
             }
         })
         return {
