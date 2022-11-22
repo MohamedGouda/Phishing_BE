@@ -12,9 +12,9 @@ exports.getTargetsList = async (req, res) => {
     }
 }
 
-exports.getTargetById = (req, res) => {
+exports.getTargetById = async (req, res) => {
     try {
-        const result = targetService.getTargetById(req.params.target_id, res)
+        const result = await targetService.getTargetById(req.params.target_id, res)
         return res.status(result.status).send(JSON.stringify(result.data)); 
     } catch (error) {
         return res.status(500).send({ error });
@@ -31,9 +31,10 @@ exports.addTarget = async (req, res) => {
     }
 }
 
-exports.addBulkData = (req, res) => {
+exports.addBulkData = async(req, res) => {
     try {
-        const result = targetService.addNewTarget(req.body)
+        const result = await targetService.addBulkData(req.body)
+        console.log(result)
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });

@@ -55,6 +55,9 @@ exports.addNewTarget = async (data) => {
 
 exports.addBulkData = async (data) => {
     try {
+        data = data.map((t)=>{return {...t , target_id: uuidv4()}})
+
+        console.log(data)
         const addedTarget = await Target.bulkCreate(data);
         return { status: 200, data: addedTarget };
     } catch (error) {
