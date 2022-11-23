@@ -22,7 +22,8 @@ validateEmail = (email) => {
 };
 
 validateName = (name) => {
-    return name.length <= 50
+    return (name.length <= 50 &&
+        name.match(/^[A-Za-z0-9 ]+$/))
 }
 
 checkEmailDuplication = async (email) => {
@@ -56,7 +57,7 @@ exports.addNewTarget = async (data) => {
             const addedTarget = await Target.create({ ...data });
             return { status: 200, data: addedTarget };
         } else {
-            return { status: 401, data: "adding failed..." };
+            return { status: 401, data: "added data not valid.." };
         }
     } catch (error) {
         return { status: 500, data: error };
