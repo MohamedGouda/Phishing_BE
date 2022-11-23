@@ -40,9 +40,25 @@ exports.getTargetById = async (id, res) => {
     }
 }
 
-exports.getAllTargets = async () => {
+exports.getAllTargets = async (body) => {
+
+    /**
+     * order : [ 
+     * ['id', 'DESC'],
+       ['name', 'ASC'] 
+    ],
+     */
+
+    // here we should generate the sortCriteria list from  the body to be agreed with FE team
+
+    // should also determine if the search will be combined with getAllTargets
+
     try {
-        const data = await Target.findAll();
+        const data = await Target.findAll({
+            limit: body.numberOfRecords,
+            offset: (body.pageNumber * body.numberOfRecords),
+            order: body.sortCriteria
+        });
         return { status: 200, data };
     } catch (error) {
         return { status: 404, data: error };

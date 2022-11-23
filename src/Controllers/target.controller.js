@@ -5,7 +5,7 @@ const Target = require("../Models/target");
 
 exports.getTargetsList = async (req, res) => {
     try {
-        const result = await targetService.getAllTargets();
+        const result = await targetService.getAllTargets(req.body);
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });
