@@ -1,7 +1,7 @@
 /* This file just for reference
 
 /* Create Users table*/
-CREATE TABLE IF NOT EXISTS public.users
+CREATE TABLE IF NOT EXISTS users
 (
     user_id uuid NOT NULL DEFAULT uuid_generate_v4(),
     name character varying(255)  NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.users
 )
 
 /* Create Target table*/
-CREATE TABLE IF NOT EXISTS public.targets
+CREATE TABLE IF NOT EXISTS targets
 (
     target_id uuid NOT NULL DEFAULT uuid_generate_v4(),
     name character varying(255) NOT NULL,
