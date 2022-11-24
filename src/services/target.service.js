@@ -50,6 +50,14 @@ exports.getAllTargets = async (body) => {
      */
 
     // here we should generate the sortCriteria list from  the body to be agreed with FE team
+    let sortCriteria= []
+
+    console.log(sortCriteria)
+
+    sortCriteria.push(body["sort"]["column"])
+    sortCriteria.push(body["sort"]["sortType"])
+
+    console.log(sortCriteria)
 
     // should also determine if the search will be combined with getAllTargets
 
@@ -57,7 +65,7 @@ exports.getAllTargets = async (body) => {
         const data = await Target.findAll({
             limit: body.numberOfRecords,
             offset: (body.pageNumber * body.numberOfRecords),
-            order: body.sortCriteria
+            order: [sortCriteria]
         });
         return { status: 200, data };
     } catch (error) {
