@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users
     CONSTRAINT user_id PRIMARY KEY (user_id)
 )
 
-/* Create Target table*/
+/* Create Targets table*/
 CREATE TABLE IF NOT EXISTS targets
 (
     target_id uuid NOT NULL DEFAULT uuid_generate_v4(),
@@ -29,14 +29,31 @@ CREATE TABLE IF NOT EXISTS targets
     CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users
 )
 
+/* Create Groups table*/
+CREATE TABLE IF NOT EXISTS groups
+(
+    group_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    name character varying(255) NOT NULL,
+    rate numeric,
+    user_id uuid NOT NULL,
+    created_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_update timestamp,
+    CONSTRAINT group_id PRIMARY KEY (group_id),
+    CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users
+)
+
 /* To insert User */
 
-INSERT INTO public.users(name, email, domain, password, subscription_date, subscription_expiry_date)
+INSERT INTO users(name, email, domain, password, subscription_date, subscription_expiry_date)
 VALUES ('esmail', 'user@gmail', string_to_array('gmail', 'hostmal'),'0ca0e701', current_timestamp, current_timestamp);
-
 
 /* To insert Target */
 /* You need to add user_id from last creation*/
 
-INSERT INTO public.targets(name, email, user_id, rate)
+INSERT INTO targets(name, email, user_id, rate)
 VALUES ('khaled', 'khaled@gmail', '50d46c45-1261-4b24-9bef-e8fe5e938042', 4);
+
+/* To insert Group */
+/* You need to add user_id from last creation*/
+INSERT INTO groups(name, user_id, rate)
+VALUES ('IT', '50d46c45-1261-4b24-9bef-e8fe5e938042', 4);
