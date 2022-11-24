@@ -42,24 +42,15 @@ exports.getTargetById = async (id, res) => {
 
 exports.getAllTargets = async (body) => {
 
-    /**
-     * order : [ 
-     * ['id', 'DESC'],
-       ['name', 'ASC'] 
-    ],
-     */
-
-    // here we should generate the sortCriteria list from  the body to be agreed with FE team
-    let sortCriteria= []
-
-    console.log(sortCriteria)
+    let sortCriteria = []
 
     sortCriteria.push(body["sort"]["column"])
     sortCriteria.push(body["sort"]["sortType"])
 
-    console.log(sortCriteria)
-
-    // should also determine if the search will be combined with getAllTargets
+    if (!sortCriteria) {
+        sortCriteria.push('created_on')
+        sortCriteria.push('ASC')
+    }
 
     try {
         const data = await Target.findAll({
@@ -132,5 +123,40 @@ exports.verifyBulkData = async (data) => {
         }
     } catch (error) {
         return { status: 500, data: error };
+    }
+}
+
+exports.searchTargets = async (body) => {
+    try {
+        let sortCriteria = []
+        let searchCriteria = {}
+        let findObject = {}
+
+        findObject['limit'] = body.numberOfRecords
+        findObject['offset'] = (body.pageNumber * body.numberOfRecords)
+
+        if (body["sort"]) {
+            sortCriteria.push(body["sort"]["column"])
+            sortCriteria.push(body["sort"]["sortType"])
+        } else {
+            sortCriteria.push('created_on')
+            sortCriteria.push('ASC')
+        }
+
+        if (body["search"]) {
+            searchCriteria[body["search"]["column"]] = body["search"]["value"]
+
+            findObject['where'] = searchCriteria
+        }
+
+        findObject['order'] = [sortCriteria]
+
+        const data = await Target.findAll({
+            ...findObject
+        });
+
+        return { status: 200, data };
+    } catch (error) {
+        return { status: 404, data: error };
     }
 }

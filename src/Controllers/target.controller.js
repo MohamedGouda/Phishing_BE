@@ -51,3 +51,14 @@ exports.verifyBulkData = async (req, res) => {
         return res.status(500).send({ error });
     }
 }
+
+exports.searchTargets = async (req, res) => {
+    try {
+        const result = await targetService.searchTargets(req.body)
+        console.log(result)
+        return res.status(result.status).send(JSON.stringify(result.data));
+
+    } catch (error) {
+        return res.status(500).send({ error });
+    }
+}

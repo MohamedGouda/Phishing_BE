@@ -12,4 +12,6 @@ router.post("/target/bulk" , targetController.addBulkData)
 
 router.post("/target/bulk/verify" , targetController.verifyBulkData)
 
+router.post("/target/search" , targetController.searchTargets)
+
 module.exports = router;

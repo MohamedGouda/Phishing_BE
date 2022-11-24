@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./src/Database/connection");
 const targetRoute = require("./src/Routes/target.route");
+const userRoute = require("./src/Routes/user.route");
+
 
 db.authenticate()
     .then(() => { 
@@ -22,6 +24,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(targetRoute);
+app.use(userRoute);
+
 
 app.listen(3001, () => {
     console.log("app running.......");
