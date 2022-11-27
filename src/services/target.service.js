@@ -91,6 +91,15 @@ exports.addBulkData = async (data) => {
     }
 }
 
+exports.editTarget = async (target_id , body) => {
+    try {
+        const result = await Target.update({ ...body }, { where: { target_id } })
+        return { status: 201, data: result }
+    } catch (error) {
+        return { status: 500, data: error };
+    }
+}
+
 
 exports.verifyBulkData = async (data) => {
     try {

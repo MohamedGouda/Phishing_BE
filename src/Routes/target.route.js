@@ -6,6 +6,9 @@ router.post("/target", targetController.getTargetsList);
 
 router.get("/target/:target_id", targetController.getTargetById);
 
+router.put("/target/:target_id", targetController.editTarget);
+
+
 router.post("/target", targetController.addTarget);
 
 router.post("/target/bulk" , targetController.addBulkData)

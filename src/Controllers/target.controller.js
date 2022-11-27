@@ -31,6 +31,16 @@ exports.addTarget = async (req, res) => {
     }
 }
 
+exports.editTarget = async (req, res) => {
+    try {
+        const result = await targetService.editTarget(req.params.target_id , req.body)
+        console.log(result)
+        return res.status(result.status).send(JSON.stringify(result.data));
+    } catch (error) {
+        return res.status(500).send({ error });
+    }
+}
+
 exports.addBulkData = async (req, res) => {
     try {
         const result = await targetService.addBulkData(req.body)

@@ -1,29 +1,27 @@
-var userService = require('../Services/user.service')
-const User = require("../Models/user");
+var groupService = require('../Services/group.service')
+const Group = require("../Models/group");
 
-exports.getUsersList = async (req, res) => {
+exports.getGroupsList = async (req, res) => {
     try {
-        const result = await userService.getAllUsers(req.body);
+        const result = await groupService.getAllGroups(req.body);
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });
     }
 }
 
-exports.
-
-getUserById = async (req, res) => {
+exports.getGroupById = async (req, res) => {
     try {
-        const result = await userService.getUserById(req.params.user_id, res)
+        const result = await groupService.getGroupById(req.params.group_id, res)
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
         return res.status(500).send({ error });
     }
 }
 
-exports.addUser = async (req, res) => {
+exports.addGroup = async (req, res) => {
     try {
-        const result = await userService.addNewUser(req.body)
+        const result = await groupService.addNewGroup(req.body)
         console.log(result)
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
@@ -31,9 +29,9 @@ exports.addUser = async (req, res) => {
     }
 }
 
-exports.editUser = async (req, res) => {
+exports.editGroup = async (req, res)=>{
     try {
-        const result = await userService.editUser(req.params.user_id , req.body)
+        const result = await groupService.editGroup(req.params.group_id,req.body)
         console.log(result)
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {
@@ -42,9 +40,9 @@ exports.editUser = async (req, res) => {
 }
 
 
-exports.searchUser = async (req, res) => {
+exports.searchGroups = async (req, res) => {
     try {
-        const result = await userService.searchUser(req.body)
+        const result = await groupService.searchGroup(req.body)
         console.log(result)
         return res.status(result.status).send(JSON.stringify(result.data));
     } catch (error) {

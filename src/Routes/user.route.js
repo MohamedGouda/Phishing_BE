@@ -6,6 +6,9 @@ router.post("/users", userController.getUsersList);
 
 router.get("/user/:user_id", userController.getUserById);
 
+router.put("/user/:user_id", userController.editUser);
+
+
 router.post("/user", userController.addUser);
 
 router.post("/user/search", userController.searchUser);

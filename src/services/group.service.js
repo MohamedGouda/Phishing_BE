@@ -1,41 +1,33 @@
 const { v4: uuidv4 } = require('uuid');
-const User = require("../Models/user");
+const Group = require("../Models/group");
 
-validateUserData = (targetDate) => {
-    return (validateEmail(targetDate.email) && validateName(targetDate.name)) ? true : false
+validateGroupData = (groupDate) => {
+    return (validateName(groupDate.name)) ? true : false
 }
-
-validateEmail = (email) => {
-    return (String(email)
-        .toLowerCase()
-        .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        ) && String(email).length <= 254);
-};
 
 validateName = (name) => {
     return (name.length <= 50 &&
         name.match(/^[A-Za-z0-9 ]+$/))
 }
 
-exports.getUserById = async (id, res) => {
+exports.getGroupById = async (id, res) => {
     try {
-        const data = await User.findOne(({ where: { user_id: id } }))
+        const data = await Group.findOne(({ where: { group_id: id } }))
         return { status: 200, data };
     } catch (error) {
         return { status: 404, data: error };
     }
 }
 
-exports.getAllUsers = async (body) => {
+exports.getAllGroups = async (body) => {
 
-    let sortCriteria= []
+    let sortCriteria = []
 
     sortCriteria.push(body["sort"]["column"])
     sortCriteria.push(body["sort"]["sortType"])
 
     try {
-        const data = await User.findAll({
+        const data = await Group.findAll({
             limit: body.numberOfRecords,
             offset: (body.pageNumber * body.numberOfRecords),
             order: [sortCriteria]
@@ -46,13 +38,13 @@ exports.getAllUsers = async (body) => {
     }
 }
 
-exports.addNewUser = async (data) => {
+exports.addNewGroup = async (data) => {
 
     try {
-        if (validateUserData(data)) {
-            data = { ...data, user_id: uuidv4() };
-            const addedUser = await User.create({ ...data });
-            return { status: 200, data: addedUser };
+        if (validateGroupData(data)) {
+            data = { ...data, group_id: uuidv4() };
+            const addedGroup = await Group.create({ ...data });
+            return { status: 200, data: addedGroup };
         } else {
             return { status: 401, data: "added data not valid.." };
         }
@@ -61,16 +53,16 @@ exports.addNewUser = async (data) => {
     }
 }
 
-exports.editUser = async (user_id, body) => {
+exports.editGroup = async (group_id, body) => {
     try {
-        const result = await User.update({ ...body }, { where: { user_id } })
+        const result = await Group.update({ ...body }, { where: { group_id } })
         return { status: 201, data: result }
     } catch (error) {
         return { status: 500, data: error };
     }
 }
 
-exports.searchUser=  async (body) => {
+exports.searchGroup = async (body) => {
     try {
         let sortCriteria = []
         let searchCriteria = {}
@@ -95,7 +87,7 @@ exports.searchUser=  async (body) => {
 
         findObject['order'] = [sortCriteria]
 
-        const data = await User.findAll({
+        const data = await Group.findAll({
             ...findObject
         });
 
